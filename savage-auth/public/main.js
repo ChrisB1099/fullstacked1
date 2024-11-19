@@ -1,43 +1,70 @@
-var thumbUp = document.getElementsByClassName("fa-thumbs-up");
-var thumbDown = document.getElementsByClassName("fa-thumbs-down");
-var trash = document.getElementsByClassName("fa-trash-o");
+// PbgK6RkY3r775BNP
+// mongodb+srv://christianbradford99:PbgK6RkY3r775BNP@cluster0.tgvj0.mongodb.net/
 
-Array.from(thumbUp).forEach(function(element) {
-      element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-        fetch('messages', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            'name': name,
-            'msg': msg,
-            'thumbUp':thumbUp
-          })
+
+// var crossOutIcons = document.getElementsByClassName("fa fa-heart");
+var saveGoals = document.querySelectorAll("div button");
+var trash = document.getElementsByClassName("delete");
+var heart = document.getElementsByClassName("heartbutton");
+
+console.log(saveGoals)
+Array.from(saveGoals).forEach(function (element) {
+  element.addEventListener("click", function (e) {
+    // e.preventDefault();
+    
+    const day = this.parentNode.parentNode.childNodes[1].childNodes[1].innerText
+    const goal = this.parentNode.parentNode.childNodes[1].childNodes[5].value
+    console.log('buttonworking')
+    fetch("goals",
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          goal: goal,
+          day: day
+          
+      
         })
-        .then(response => {
-          if (response.ok) return response.json()
+      })
+        .then((response) => {
+          if (response.ok) return response.json();
         })
-        .then(data => {
-          console.log(data)
-          window.location.reload(true)
-        })
-      });
+        .then((data) => {
+          console.log(data);
+          window.location.href = "/profile";
+        });
+  });
 });
 
-Array.from(thumbDown).forEach(function(element) {
-  element.addEventListener('click', function(){
-    const name = this.parentNode.parentNode.childNodes[1].innerText
-    const msg = this.parentNode.parentNode.childNodes[3].innerText
-    const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-    fetch('messagesdown', {
+Array.from(trash).forEach(function(element) {
+  element.addEventListener('click', function() {
+    console.log('delete:', this.id)
+    fetch('goals', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: this.id
+    
+      })
+    }).then(function(response) {
+      if (response.ok) return response.json();
+      window.location.href = "/profile";
+    }).catch(err => console.error(err));
+  });
+});
+
+
+Array.from(heart).forEach(function(element){
+element.addEventListener('click', function() {
+    console.log('crossouticon',this)
+    fetch('goals', {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        'name': name,
-        'msg': msg,
-        'thumbUp':thumbUp
+        id: this.id
+        
       })
     })
     .then(response => {
@@ -45,26 +72,9 @@ Array.from(thumbDown).forEach(function(element) {
     })
     .then(data => {
       console.log(data)
-      window.location.reload(true)
+      window.location.href = "/profile";
+
     })
-  });
+})
 });
 
-Array.from(trash).forEach(function(element) {
-      element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        fetch('messages', {
-          method: 'delete',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'name': name,
-            'msg': msg
-          })
-        }).then(function (response) {
-          window.location.reload()
-        })
-      });
-});
