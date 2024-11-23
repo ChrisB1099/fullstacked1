@@ -12,5 +12,5 @@ This application is a goal management system where users can add, delete and tog
 
 
  ## Usage
-run node server.js
-Navigate to localhost:2121
+1. run node server.js
+2. Navigate to localhost:2121
