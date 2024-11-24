@@ -1,6 +1,7 @@
+
 ## Goal Tracker
 ![Thumbnail](savage-auth/public/img/page.jpg)
- 
+ Link to project: https://goal-tracker-jra9.onrender.com
  ## How It's Made:
  Tech used: EJS, CSS, JavaScript, Node.js, Passport.js, MongoDB
 
